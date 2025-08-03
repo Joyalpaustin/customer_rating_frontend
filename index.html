@@ -6,6 +6,7 @@
 </head>
 <body>
   <h2>Customer Rating Prediction</h2>
+
   <form id="predictForm">
     <label for="feature1">Feature 1:</label>
     <input type="text" id="feature1" name="feature1" required><br><br>
@@ -13,7 +14,7 @@
     <label for="feature2">Feature 2:</label>
     <input type="text" id="feature2" name="feature2" required><br><br>
 
-    <!-- Add more features as needed -->
+    <!-- Add more features here if needed -->
 
     <button type="submit">Predict</button>
   </form>
@@ -30,16 +31,24 @@
         // Add more features accordingly
       };
 
-      const response = await fetch('https://customer-rating-app.onrender.com/predict', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
+      try {
+        const response = await fetch('https://customer-rating-app.onrender.com/predict', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
 
-      const result = await response.json();
-      document.getElementById('result').innerText = `Predicted Rating: ${result.predicted_rating}`;
+        if (!response.ok) {
+          throw new Error("Server error. Please check your inputs or backend.");
+        }
+
+        const result = await response.json();
+        document.getElementById('result').innerText = `Predicted Rating: ${result.predicted_rating}`;
+      } catch (error) {
+        document.getElementById('result').innerText = `❌ Error: ${error.message}`;
+      }
     });
   </script>
 </body>

@@ -47,7 +47,7 @@
         const result = await response.json();
         document.getElementById('result').innerText = `Predicted Rating: ${result.predicted_rating}`;
       } catch (error) {
-        document.getElementById('result').innerText = `❌ Error: ${error.message}`;
+        document.getElementById('result').innerText = `Error: ${error.message}`;
       }
     });
   </script>
